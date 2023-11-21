@@ -9,7 +9,7 @@ import UIKit
 import NMapsMap
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    let currentManager = CurrentViewController()
+    var locationManager = CLLocationManager()
     
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
@@ -23,28 +23,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         setUI()
         configCurLocation()
+        setLocationData()
     }
     
     func configCurLocation() {
-        currentManager.locationManager.delegate = self
-        currentManager.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        currentManager.locationManager.requestWhenInUseAuthorization()
-        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func setLocationData() {
         if CLLocationManager.locationServicesEnabled() {
             print("위치 서비스 On 상태")
-            currentManager.locationManager.startUpdatingLocation()
-            print(currentManager.locationManager.location?.coordinate as Any)
+            locationManager.startUpdatingLocation()
+            print(locationManager.location?.coordinate as Any)
             
-            
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0,
-                                                                   lng: currentManager.locationManager.location?.coordinate.longitude ?? 0))
+            // 카메라 설정
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0,
+                                                                   lng: locationManager.location?.coordinate.longitude ?? 0))
             cameraUpdate.animation = .easeIn
             naverMapView.moveCamera(cameraUpdate)
             
-            
+            // 마커 설정
             let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0,
-                                        lng: currentManager.locationManager.location?.coordinate.longitude ?? 0)
+            marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0,
+                                        lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = naverMapView
         } else {
             print("위치 서비스 Off 상태")
