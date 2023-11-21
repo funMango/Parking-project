@@ -35,11 +35,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             currentManager.locationManager.startUpdatingLocation()
             print(currentManager.locationManager.location?.coordinate as Any)
             
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0, 
+            
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0,
                                                                    lng: currentManager.locationManager.location?.coordinate.longitude ?? 0))
             cameraUpdate.animation = .easeIn
             naverMapView.moveCamera(cameraUpdate)
             
+            
+            let marker = NMFMarker()
+            marker.position = NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0,
+                                        lng: currentManager.locationManager.location?.coordinate.longitude ?? 0)
+            marker.mapView = naverMapView
         } else {
             print("위치 서비스 Off 상태")
         }
