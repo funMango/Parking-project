@@ -8,7 +8,8 @@
 import UIKit
 import NMapsMap
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    let currentManager = CurrentViewController()
     
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
@@ -21,8 +22,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        configCurLocation()
     }
     
+    func configCurLocation() {
+        currentManager.locationManager.delegate = self
+        currentManager.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        currentManager.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            print("위치 서비스 On 상태")
+            currentManager.locationManager.startUpdatingLocation()
+            print(currentManager.locationManager.location?.coordinate as Any)
+            
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentManager.locationManager.location?.coordinate.latitude ?? 0, 
+                                                                   lng: currentManager.locationManager.location?.coordinate.longitude ?? 0))
+            cameraUpdate.animation = .easeIn
+            naverMapView.moveCamera(cameraUpdate)
+            
+        } else {
+            print("위치 서비스 Off 상태")
+        }
+    }
+          
     func setUI() {
         self.view.addSubview(naverMapView)
         naverMapView.translatesAutoresizingMaskIntoConstraints = false

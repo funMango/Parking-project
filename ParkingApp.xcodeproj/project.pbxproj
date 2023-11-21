@@ -17,6 +17,7 @@
 		5A25CFA72B0C499500AE60E4 /* ParkingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CFA62B0C499500AE60E4 /* ParkingAppTests.swift */; };
 		5A25CFB12B0C499500AE60E4 /* ParkingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CFB02B0C499500AE60E4 /* ParkingAppUITests.swift */; };
 		5A25CFB32B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CFB22B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift */; };
+		5AAB13FF2B0C7CE500AAB240 /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAB13FE2B0C7CE500AAB240 /* CurrentViewController.swift */; };
 		D7F2CFFFEAB7D09BAC3B92EA /* Pods_ParkingApp_ParkingAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61D8A15684508842FC5D5B2 /* Pods_ParkingApp_ParkingAppUITests.framework */; };
 		F7F8CB2C93A6D1579AAB48CD /* Pods_ParkingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF6F4B9097029A7E1878EE3D /* Pods_ParkingAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		5A25CFAC2B0C499500AE60E4 /* ParkingAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParkingAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A25CFB02B0C499500AE60E4 /* ParkingAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAppUITests.swift; sourceTree = "<group>"; };
 		5A25CFB22B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5AAB13FE2B0C7CE500AAB240 /* CurrentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
 		64DCE4B22E139EA984309AB7 /* Pods_ParkingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParkingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B42B9224E0527553B585506 /* Pods-ParkingApp-ParkingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingApp-ParkingAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-ParkingApp-ParkingAppUITests/Pods-ParkingApp-ParkingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BBD7D4D4FDAB0E5B39D94451 /* Pods-ParkingAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ParkingAppTests/Pods-ParkingAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		5A25CF8E2B0C499400AE60E4 /* ParkingApp */ = {
 			isa = PBXGroup;
 			children = (
+				5AAB13FD2B0C7CCE00AAB240 /* Controllers */,
 				5A25CF8F2B0C499400AE60E4 /* AppDelegate.swift */,
 				5A25CF912B0C499400AE60E4 /* SceneDelegate.swift */,
 				5A25CF932B0C499400AE60E4 /* ViewController.swift */,
@@ -153,6 +156,14 @@
 				5A25CFB22B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift */,
 			);
 			path = ParkingAppUITests;
+			sourceTree = "<group>";
+		};
+		5AAB13FD2B0C7CCE00AAB240 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5AAB13FE2B0C7CE500AAB240 /* CurrentViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		8167C01291E20C8DEDBBD202 /* Pods */ = {
@@ -407,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AAB13FF2B0C7CE500AAB240 /* CurrentViewController.swift in Sources */,
 				5A25CF942B0C499400AE60E4 /* ViewController.swift in Sources */,
 				5A25CF902B0C499400AE60E4 /* AppDelegate.swift in Sources */,
 				5A25CF922B0C499400AE60E4 /* SceneDelegate.swift in Sources */,
