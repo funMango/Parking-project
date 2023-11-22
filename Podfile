@@ -8,6 +8,9 @@ target 'ParkingApp' do
   # Pods for ParkingApp
   pod 'NMapsMap'
 
+  # Pods for Alomofire
+  pod 'Alamofire', '~> 5.2'
+
   target 'ParkingAppTests' do
     inherit! :search_paths
     # Pods for testing

@@ -12,7 +12,8 @@ import NMapsMap
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
-    var locationOverlay: NMFLocationOverlay?
+    var locationOverlay: NMFLocationOverlay?    
+    let dataController = ParkingDataController()
     
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
@@ -22,13 +23,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.locationOverlay = mapView.locationOverlay
         return mapView
     }()
-
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        naverMapView.addCameraDelegate(delegate: self)
         setUI()
         configCurLocation()
         setLocationData()
-        naverMapView.addCameraDelegate(delegate: self)
+        
     }
     
     func configCurLocation() {
@@ -43,7 +45,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
             print(locationManager.location?.coordinate as Any)
             
-            
+                        
             // 카메라 설정
             let latitude = locationManager.location?.coordinate.latitude ?? 0
             let longitude = locationManager.location?.coordinate.longitude ?? 0
@@ -87,13 +89,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 extension ViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
    // 카메라 컨트롤
-   func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
        switch reason {
        case -1:
            let lat = mapView.cameraPosition.target.lat
            let long = mapView.cameraPosition.target.lng
            print("lat: \(lat)")
            print("long: \(long)")
+           
+           Task {
+               do {
+                   let data = try await dataController.getParkingLots()
+                   print(data)
+               } catch {
+                   print(error)
+               }
+           }
+                                 
        default:
            return
        }

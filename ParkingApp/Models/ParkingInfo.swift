@@ -5,27 +5,61 @@
 //  Created by 이민호 on 11/21/23.
 //
 
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let parkingLot = try? JSONDecoder().decode(ParkingLot.self, from: jsonData)
+
 import Foundation
 
-struct ParkingResponse: Codable {
-    let data: [ParkingLot]
+// MARK: - ParkingLot
+struct ParkingLot: Codable {
+    let getParkingInfo: GetParkingInfo
+
+    enum CodingKeys: String, CodingKey {
+        case getParkingInfo = "GetParkingInfo"
+    }
 }
 
-struct ParkingLot: Codable {
-    let parkingCode, parkingName, addr, parkingType: String
-    let parkingTypeNm, operationRule, operationRuleNm, tel: String
-    let queStatus, queStatusNm: String
-    let capacity, curParking: Int
-    let curParkingTime, payYn, payNm, nightFreeOpen: String
-    let nightFreeOpenNm, weekdayBeginTime, weekdayEndTime, weekendBeginTime: String
-    let weekendEndTime, holidayBeginTime, holidayEndTime, saturdayPayYn: String
-    let saturdayPayNm, holidayPayYn, holidayPayNm, fulltimeMonthly: String
-    let grpParknm: String
-    let rates, timeRate, addRates, addTimeRate: Int
-    let busRates, busTimeRate, busAddRates, busAddTimeRate: Int
-    let dayMaximum: Int
-    let lat, lng: Double
-    let shCo, shLink, shType, shEtc: String
+// MARK: - GetParkingInfo
+struct GetParkingInfo: Codable {
+    let listTotalCount: Int?
+    let result: Result
+    let row: [Row]
+
+    enum CodingKeys: String, CodingKey {
+        case listTotalCount = "list_total_count"
+        case result = "RESULT"
+        case row
+    }
+}
+
+// MARK: - Result
+struct Result: Codable {
+    let code, message: String
+
+    enum CodingKeys: String, CodingKey {
+        case code = "CODE"
+        case message = "MESSAGE"
+    }
+}
+
+// MARK: - Row
+struct Row: Codable {
+    let parkingCode, parkingName, addr, parkingType: String?
+    let parkingTypeNm, operationRule, operationRuleNm, tel: String?
+    let queStatus, queStatusNm: String?
+    let capacity, curParking: Int?
+    let curParkingTime, payYn, payNm, nightFreeOpen: String?
+    let nightFreeOpenNm, weekdayBeginTime, weekdayEndTime, weekendBeginTime: String?
+    let weekendEndTime, holidayBeginTime, holidayEndTime, saturdayPayYn: String?
+    let saturdayPayNm, holidayPayYn, holidayPayNm, fulltimeMonthly: String?
+    let grpParknm: String?
+    let rates, timeRate, addRates, addTimeRate: Int?
+    let busRates, busTimeRate, busAddRates, busAddTimeRate: Int?
+    let dayMaximum: Int?
+    let lat, lng: Double?
+    let shCo, shLink, shType, shEtc: String?
 
     enum CodingKeys: String, CodingKey {
         case parkingCode = "PARKING_CODE"
