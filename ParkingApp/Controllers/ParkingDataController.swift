@@ -18,28 +18,6 @@ enum UrlError : Error {
 
 class ParkingDataController {
     
-    // MARK: - 공영주차장 정보를 가져오는 기능 - 사용X, 안됨
-    func getApiData<T: Codable>(url: String) async throws -> T {
-        guard let url = URL(string: url) else { throw UrlError.inavalidUrl }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-                
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw UrlError.invalidResponse
-        }
-               
-        do {
-            //print("Raw Data: \(String(data: data, encoding: .utf8) ?? "Unable to convert data to UTF-8 string")")
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let result = try decoder.decode(T.self, from: data)
-            return result
-        } catch {
-            print(error)
-            throw UrlError.invalidData
-        }
-    }
-    
     // MARK: - 주차장 정보를 가져오는 기능
     func getParkings(district: String, completion: @escaping ([Parking]?) -> Void) {
         let url = API.BASE_URL + district
@@ -103,6 +81,28 @@ class ParkingDataController {
                 print(error)
                 completion(nil)
             }
+        }
+    }
+    
+    // MARK: - 공영주차장 정보를 가져오는 기능 - 사용X, 안됨
+    func getApiData<T: Codable>(url: String) async throws -> T {
+        guard let url = URL(string: url) else { throw UrlError.inavalidUrl }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+                
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw UrlError.invalidResponse
+        }
+               
+        do {
+            //print("Raw Data: \(String(data: data, encoding: .utf8) ?? "Unable to convert data to UTF-8 string")")
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let result = try decoder.decode(T.self, from: data)
+            return result
+        } catch {
+            print(error)
+            throw UrlError.invalidData
         }
     }
 }

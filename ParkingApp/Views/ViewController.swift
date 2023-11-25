@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import SnapKit
 import NMapsMap
 import Alamofire
 import SwiftyJSON
@@ -101,29 +102,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(refreshBtn)
         self.view.addSubview(zoomBtn)
         self.view.addSubview(zoomOutBtn)
-        naverMapView.translatesAutoresizingMaskIntoConstraints = false
-        refreshBtn.translatesAutoresizingMaskIntoConstraints = false
-        zoomBtn.translatesAutoresizingMaskIntoConstraints = false
-        zoomOutBtn.translatesAutoresizingMaskIntoConstraints = false
         
-        let safeArea = self.view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            naverMapView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            naverMapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
-            naverMapView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            naverMapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            
-            refreshBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            refreshBtn.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 60),
-            refreshBtn.heightAnchor.constraint(equalToConstant: 45),
-            refreshBtn.widthAnchor.constraint(equalToConstant: 230),
-            
-            zoomBtn.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -80),
-            zoomBtn.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
-            
-            zoomOutBtn.topAnchor.constraint(equalTo: zoomBtn.bottomAnchor, constant: 15),
-            zoomOutBtn.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
-        ])
+        naverMapView.snp.makeConstraints{ make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        refreshBtn.snp.makeConstraints{ make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(60)
+            make.height.equalTo(45)
+            make.width.equalTo(230)
+        }
+        
+        zoomBtn.snp.makeConstraints{
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
+        
+        zoomOutBtn.snp.makeConstraints{
+            $0.top.equalTo(zoomBtn.snp.bottom).offset(15)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
     }
     
     func configCurLocation() {

@@ -9,6 +9,9 @@ target 'ParkingApp' do
   # Pods for Alomofire
   pod 'Alamofire', '~> 5.2'
 
+  # Pods for Snapkit
+  pod 'SnapKit', '~> 5.6.0'
+
   # Pods for SwifyJSON
   pod 'SwiftyJSON', '~> 4.0'
 
