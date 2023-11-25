@@ -51,7 +51,8 @@ class ParkingDataController {
                 let json = JSON(value)
                 if let parkingInfo = try? JSONDecoder().decode(ParkingLot.self, from: json.rawData()) {
                     let parkingArray = parkingInfo.getParkingInfo.row
-                    completion(parkingArray)
+                    let uniqueArr = self.getUnique(parkingArray)
+                    completion(uniqueArr)
                 } else {
                     print("Failed to decode JSON")
                     completion(nil)
@@ -62,6 +63,22 @@ class ParkingDataController {
             }
         }
     }
+    
+    func getUnique(_ parkings: [Parking]) -> [Parking] {
+        let filtered = parkings.filter { !$0.parkingName.contains("관광버스")}
+        var uniqueParkings = [Parking]()
+        var seenCodes = Set<String>()
+
+        for parking in filtered {
+            if !seenCodes.contains(parking.parkingCode) {
+                uniqueParkings.append(parking)
+                seenCodes.insert(parking.parkingCode)
+            }
+        }
+
+        return uniqueParkings
+    }
+
     
     // MARK: - 좌표를 주소로 바꾸는 기능
     func getDistrict(long: Double, lat: Double, completion: @escaping (String?) -> Void) {
@@ -81,8 +98,7 @@ class ParkingDataController {
                 let json = JSON(value)
                 let data = json["results"]
                 let district = data[0]["region"]["area2"]["name"].string ?? ""
-                completion(district)
-                print("\(district)")
+                completion(district)                
             case .failure(let error):
                 print(error)
                 completion(nil)
