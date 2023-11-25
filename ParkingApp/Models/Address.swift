@@ -49,7 +49,7 @@ struct Coords: Codable {
 // MARK: - Center
 struct Center: Codable {
     let crs: CRS?
-    let x, y: Double?
+    let x, y: Double
 }
 
 enum CRS: String, Codable {

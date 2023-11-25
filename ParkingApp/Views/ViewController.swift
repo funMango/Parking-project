@@ -19,10 +19,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var long: Double = 0
     var curDistrict = ""
     
-    // MARK: - 세로고침 버튼
-    var configuration = UIButton.Configuration.tinted()
-    var titleContainer = AttributeContainer()
-    
     // MARK: - NAVER MAP
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
@@ -32,6 +28,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.locationOverlay = mapView.locationOverlay
         return mapView
     }()
+    
+    // MARK: - 세로고침 버튼
+    var configuration = UIButton.Configuration.filled()
+    var titleContainer = AttributeContainer()
     
     // MARK: - 새로고침 버튼 실행 함수
     private lazy var refreshBtn = UIButton(configuration: configuration, primaryAction: UIAction(handler: { _ in
@@ -45,7 +45,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }))
-        
+    
+    // MARK: - 줌인, 줌아웃 버튼
+    lazy var zoomBtn: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        let image = UIImage(systemName: "plus.circle", withConfiguration: imageConfig)
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemBlue
+        button.addTarget(self, action: #selector(plusBtnTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func plusBtnTapped() {
+        let cameraUpdate = NMFCameraUpdate.withZoomIn()
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    lazy var zoomOutBtn: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        let image = UIImage(systemName: "minus.circle", withConfiguration: imageConfig)
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemBlue
+        button.addTarget(self, action: #selector(minusBtnTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func minusBtnTapped() {
+        let cameraUpdate = NMFCameraUpdate.withZoomOut()
+        naverMapView.moveCamera(cameraUpdate)
+    }
+                                
     override func viewDidLoad() {
         super.viewDidLoad()
         naverMapView.addCameraDelegate(delegate: self)
@@ -68,8 +99,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func configLocation() {
         self.view.addSubview(naverMapView)
         self.view.addSubview(refreshBtn)
+        self.view.addSubview(zoomBtn)
+        self.view.addSubview(zoomOutBtn)
         naverMapView.translatesAutoresizingMaskIntoConstraints = false
         refreshBtn.translatesAutoresizingMaskIntoConstraints = false
+        zoomBtn.translatesAutoresizingMaskIntoConstraints = false
+        zoomOutBtn.translatesAutoresizingMaskIntoConstraints = false
         
         let safeArea = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -80,8 +115,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             refreshBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             refreshBtn.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 60),
-            refreshBtn.heightAnchor.constraint(equalToConstant: 60),
+            refreshBtn.heightAnchor.constraint(equalToConstant: 45),
             refreshBtn.widthAnchor.constraint(equalToConstant: 230),
+            
+            zoomBtn.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -80),
+            zoomBtn.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            zoomOutBtn.topAnchor.constraint(equalTo: zoomBtn.bottomAnchor, constant: 15),
+            zoomOutBtn.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
         ])
     }
     
@@ -168,6 +209,8 @@ extension ViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
            self.lat = mapView.cameraPosition.target.lat
            self.long = mapView.cameraPosition.target.lng
            print("lng:\(long), lat:\(lat)")
+       
+           
        default:
            return
        }
