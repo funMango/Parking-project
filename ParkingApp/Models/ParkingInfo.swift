@@ -45,7 +45,7 @@ struct Result: Codable {
 }
 
 // MARK: - Row
-struct Parking: Codable {
+struct Parking: Codable, Equatable, Hashable {
     let parkingCode, parkingName, addr, parkingType: String
     let parkingTypeNm, operationRule, operationRuleNm, tel: String
     let queStatus, queStatusNm: String

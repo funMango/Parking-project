@@ -19,6 +19,7 @@
 		5A25CFB12B0C499500AE60E4 /* ParkingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CFB02B0C499500AE60E4 /* ParkingAppUITests.swift */; };
 		5A25CFB32B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CFB22B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift */; };
 		5A73C4392B0F51AC0071EAB5 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A73C4382B0F51AC0071EAB5 /* Address.swift */; };
+		5AACC5262B11883700204992 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AACC5252B11883700204992 /* Preview.swift */; };
 		5AEC8C042B0CD2C000D689A2 /* ParkingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC8C032B0CD2C000D689A2 /* ParkingInfo.swift */; };
 		667BDE1FD1C2B8850C9E00EA /* Pods_ParkingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE451920F7D7706C0AF27B5 /* Pods_ParkingApp.framework */; };
 		AD78215415DD7AC551367F55 /* Pods_ParkingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B82752808CE81C23836171 /* Pods_ParkingAppTests.framework */; };
@@ -62,6 +63,7 @@
 		5A25CFB02B0C499500AE60E4 /* ParkingAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAppUITests.swift; sourceTree = "<group>"; };
 		5A25CFB22B0C499500AE60E4 /* ParkingAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5A73C4382B0F51AC0071EAB5 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		5AACC5252B11883700204992 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		5AEC8C032B0CD2C000D689A2 /* ParkingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingInfo.swift; sourceTree = "<group>"; };
 		986C0565B915926F2C26C4CA /* Pods-ParkingApp-ParkingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingApp-ParkingAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ParkingApp-ParkingAppUITests/Pods-ParkingApp-ParkingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BDCAF6A5BC49497815507C4A /* Pods-ParkingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingApp.release.xcconfig"; path = "Target Support Files/Pods-ParkingApp/Pods-ParkingApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				5A25CF982B0C499500AE60E4 /* Assets.xcassets */,
 				5A25CF9A2B0C499500AE60E4 /* LaunchScreen.storyboard */,
 				5A25CF9D2B0C499500AE60E4 /* Info.plist */,
+				5AACC5252B11883700204992 /* Preview.swift */,
 			);
 			path = ParkingApp;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			files = (
 				5A15E7DC2B0DB8B700F773C6 /* ParkingDataController.swift in Sources */,
 				5A25CF942B0C499400AE60E4 /* ViewController.swift in Sources */,
+				5AACC5262B11883700204992 /* Preview.swift in Sources */,
 				5AEC8C042B0CD2C000D689A2 /* ParkingInfo.swift in Sources */,
 				5A15E7E22B0DDB7B00F773C6 /* Constants.swift in Sources */,
 				5A25CF902B0C499400AE60E4 /* AppDelegate.swift in Sources */,
