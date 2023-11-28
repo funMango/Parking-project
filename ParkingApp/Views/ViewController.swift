@@ -168,9 +168,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     // MARK: - 마커 생성
-    func makeMarker(lat: Double, long: Double) {
-        let marker = NMFMarker()
-        marker.position = NMGLatLng(lat: lat, lng: long)
+    func makeMarker(lat: Double, long: Double, caption: String) {
+        let marker = CustomMarker.createMarker(position: NMGLatLng(lat: lat, lng: long), caption: caption)
         marker.mapView = self.naverMapView
         self.markers.append(marker)
     }
@@ -195,7 +194,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             self.removeMarkers()
                         }
                         for parking in parkings {
-                            self.makeMarker(lat: parking.lat, long: parking.lng)
+                            self.makeMarker(lat: parking.lat, long: parking.lng, caption: parking.parkingName)
                         }
                     } else {
                         print("Failed to fetch or decode parkings.")
