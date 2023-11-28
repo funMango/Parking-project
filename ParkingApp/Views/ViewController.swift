@@ -16,6 +16,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     var locationOverlay: NMFLocationOverlay?    
     let dataController = ParkingDataController()
+    var parkings = [Parking]()
+    var markers = [NMFMarker]()
     var lat: Double = 0
     var long: Double = 0
     var curDistrict = ""
@@ -170,6 +172,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let marker = NMFMarker()
         marker.position = NMGLatLng(lat: lat, lng: long)
         marker.mapView = self.naverMapView
+        self.markers.append(marker)
+    }
+    
+    func removeMarkers() {
+        for marker in markers {
+            marker.mapView = nil
+        }
+        markers.removeAll()
+    }
+    
+    func delMarker(lat: Double, long: Double) {
+        
     }
     
     func pickMarker(long: Double, lat: Double) {
@@ -177,7 +191,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if let district = district {
                 self.dataController.getParkings(district: district) { parkings in
                     if let parkings = parkings {
-                        print(parkings)
+                        if self.markers.count > 0 {
+                            self.removeMarkers()
+                        }
                         for parking in parkings {
                             self.makeMarker(lat: parking.lat, long: parking.lng)
                         }
@@ -205,9 +221,11 @@ extension ViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
        switch reason {
        case -1:
+           // mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
            self.lat = mapView.cameraPosition.target.lat
            self.long = mapView.cameraPosition.target.lng
            print("lng:\(long), lat:\(lat)")
+           debugPrint(mapView.cameraPosition)
        
            
        default:
