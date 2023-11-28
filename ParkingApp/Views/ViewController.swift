@@ -16,8 +16,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     var locationOverlay: NMFLocationOverlay?    
     let dataController = ParkingDataController()
+    let customMarker = CustomMarker()
     var parkings = [Parking]()
-    var markers = [NMFMarker]()
     var lat: Double = 0
     var long: Double = 0
     var curDistrict = ""
@@ -41,7 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.dataController.getDistrict(long: self.long , lat: self.lat) { district in
             if let district = district {
                 if self.curDistrict != district {
-                    self.pickMarker(long: self.long, lat: self.lat)
+                    self.customMarker.pickMarker(naverMapView: self.naverMapView, long: self.long, lat: self.lat)
                 }
             } else {
                 print("Failed to fetch district.")
@@ -145,7 +145,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude), zoomTo: 14)
             naverMapView.moveCamera(cameraUpdate)
             cameraUpdate.animation = .easeIn
-            pickMarker(long: longitude, lat: latitude)
+            customMarker.pickMarker(naverMapView: self.naverMapView, long: longitude, lat: latitude)
             
             dataController.getDistrict(long: longitude, lat: latitude) { district in
                 if let district = district {
@@ -165,44 +165,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         } else {
             print("위치 서비스 Off 상태")
-        }
-    }
-    // MARK: - 마커 생성
-    func makeMarker(lat: Double, long: Double, caption: String) {
-        let marker = CustomMarker.createMarker(position: NMGLatLng(lat: lat, lng: long), caption: caption)
-        marker.mapView = self.naverMapView
-        self.markers.append(marker)
-    }
-    
-    func removeMarkers() {
-        for marker in markers {
-            marker.mapView = nil
-        }
-        markers.removeAll()
-    }
-    
-    func delMarker(lat: Double, long: Double) {
-        
-    }
-    
-    func pickMarker(long: Double, lat: Double) {
-        dataController.getDistrict(long: long, lat: lat) { district in
-            if let district = district {
-                self.dataController.getParkings(district: district) { parkings in
-                    if let parkings = parkings {
-                        if self.markers.count > 0 {
-                            self.removeMarkers()
-                        }
-                        for parking in parkings {
-                            self.makeMarker(lat: parking.lat, long: parking.lng, caption: parking.parkingName)
-                        }
-                    } else {
-                        print("Failed to fetch or decode parkings.")
-                    }
-                }
-            } else {
-                print("Failed to fetch district.")
-            }
         }
     }
 }
