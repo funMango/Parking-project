@@ -15,19 +15,22 @@ class CustomMarker: NMFMarker {
     static var touchHandler: NMFOverlayTouchHandler?
     var markers = [NMFMarker]()
     let dataController = ParkingDataController()
+    var delegate : ModalDelegate?
             
     func makeMarker(naverMapView: NMFMapView, lat: Double, long: Double, caption: String) {
-        let marker = CustomMarker.createMarker(position: NMGLatLng(lat: lat, lng: long), caption: caption)
+        let marker = createMarker(position: NMGLatLng(lat: lat, lng: long), caption: caption)
         marker.mapView = naverMapView
         self.markers.append(marker)
     }
     
-    class func createMarker(position: NMGLatLng, caption: String) -> CustomMarker {
+    func createMarker(position: NMGLatLng, caption: String) -> CustomMarker {
         let marker = CustomMarker(position: position)
         marker.captionText = caption
         marker.touchHandler = { overlay in
             // 마커 터치 이벤트를 처리하는 사용자 정의 로직을 작성
             print("\(caption)마커 터치 이벤트가 발생했습니다.")
+            self.delegate?.presentModal()
+            
             return true // 이벤트 소비
         }
         return marker
