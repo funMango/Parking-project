@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ModalDelegate {
-    func presentModal()
+    func presentModal(_ parking: Parking)
 }

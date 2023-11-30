@@ -12,8 +12,7 @@ import NMapsMap
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresentationControllerDelegate, ModalDelegate {
-    
+class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresentationControllerDelegate, ModalDelegate {            
     var locationManager = CLLocationManager()
     var locationOverlay: NMFLocationOverlay?    
     let dataController = ParkingDataController()
@@ -93,16 +92,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresen
     }
     
     // MARK: - 모달창 생성
-    func presentModal() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .systemYellow
-        
+    func presentModal(_ parking: Parking) {
+        let vc = SmallModalView(parking: parking)
+        vc.view.backgroundColor = .white
         vc.modalPresentationStyle = .pageSheet
         
         if let sheet = vc.sheetPresentationController {
             
             //지원할 크기 지정
-            sheet.detents = [.medium(), .large()]
+            sheet.detents = [
+                .custom { context in
+                    return context.maximumDetentValue * 0.4
+                },
+                .custom { context in
+                    return context.maximumDetentValue
+                }
+            ]
             //크기 변하는거 감지
             sheet.delegate = self
            
@@ -113,7 +118,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresen
             //sheet.selectedDetentIdentifier = .large
             
             //뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
-            //sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.largestUndimmedDetentIdentifier = .medium
         }
         present(vc, animated: true, completion: nil)
     }

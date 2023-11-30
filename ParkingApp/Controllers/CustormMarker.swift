@@ -23,7 +23,7 @@ class CustomMarker: NMFMarker {
                             self.removeMarkers()
                         }
                         for parking in parkings {
-                            self.makeMarker(naverMapView: naverMapView, lat: parking.lat, long: parking.lng, caption: parking.parkingName)
+                            self.makeMarker(parking: parking, naverMapView: naverMapView, lat: parking.lat, long: parking.lng, caption: parking.parkingName)
                         }
                     } else {
                         print("Failed to fetch or decode parkings.")
@@ -35,18 +35,18 @@ class CustomMarker: NMFMarker {
         }
     }
             
-    func makeMarker(naverMapView: NMFMapView, lat: Double, long: Double, caption: String) {
-        let marker = createMarker(position: NMGLatLng(lat: lat, lng: long), caption: caption)
+    func makeMarker(parking: Parking, naverMapView: NMFMapView, lat: Double, long: Double, caption: String) {
+        let marker = createMarker(parking: parking, position: NMGLatLng(lat: lat, lng: long), caption: caption)
         marker.mapView = naverMapView
         self.markers.append(marker)
     }
     
-    func createMarker(position: NMGLatLng, caption: String) -> CustomMarker {
+    func createMarker(parking: Parking, position: NMGLatLng, caption: String) -> CustomMarker {
         let marker = CustomMarker(position: position)
         marker.captionText = caption
         marker.touchHandler = { overlay in
             print("\(caption)마커 터치 이벤트가 발생했습니다.")
-            self.delegate?.presentModal()
+            self.delegate?.presentModal(parking)
             return true
         }
         return marker
