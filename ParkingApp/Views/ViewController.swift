@@ -81,6 +81,7 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
             
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         customMarker.delegate = self
         naverMapView.addCameraDelegate(delegate: self)
         configStyle()
