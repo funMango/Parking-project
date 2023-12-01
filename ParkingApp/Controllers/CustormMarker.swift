@@ -13,8 +13,11 @@ class CustomMarker: NMFMarker {
     var markers = [NMFMarker]()
     let dataController = ParkingDataController()
     var delegate : ModalDelegate?
+    var naverMapView: NMFMapView?
     
     func pickMarker(naverMapView: NMFMapView, long: Double, lat: Double) {
+        self.naverMapView = naverMapView
+        
         dataController.getDistrict(long: long, lat: lat) { district in
             if let district = district {
                 self.dataController.getParkings(district: district) { parkings in
@@ -23,7 +26,7 @@ class CustomMarker: NMFMarker {
                             self.removeMarkers()
                         }
                         for parking in parkings {
-                            self.makeMarker(parking: parking, naverMapView: naverMapView, lat: parking.lat, long: parking.lng, caption: parking.parkingName)
+                            self.makeMarker(parking: parking, lat: parking.lat, long: parking.lng, caption: parking.parkingName)
                         }
                     } else {
                         print("Failed to fetch or decode parkings.")
@@ -35,9 +38,14 @@ class CustomMarker: NMFMarker {
         }
     }
             
-    func makeMarker(parking: Parking, naverMapView: NMFMapView, lat: Double, long: Double, caption: String) {
+    func makeMarker(parking: Parking, lat: Double, long: Double, caption: String) {
         let marker = createMarker(parking: parking, position: NMGLatLng(lat: lat, lng: long), caption: caption)
-        marker.mapView = naverMapView
+        if let naverMapView = self.naverMapView {
+            marker.mapView = naverMapView
+        } else {
+            print("naverMapView is nil")
+        }
+        
         self.markers.append(marker)
     }
     

@@ -12,24 +12,22 @@ import NMapsMap
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresentationControllerDelegate, ModalDelegate {            
-    var locationManager = CLLocationManager()
-    var locationOverlay: NMFLocationOverlay?    
+class ViewController: UIViewController, UISheetPresentationControllerDelegate, ModalDelegate {
+    var locationOverlay: NMFLocationOverlay?
     let dataController = ParkingDataController()
+    var locationManager = LocationManager()
     let customMarker = CustomMarker()
-    var parkings = [Parking]()
     var lat: Double = 0
     var long: Double = 0
     var curDistrict = ""
-  
     
     // MARK: - NAVER MAP
-    private lazy var naverMapView: NMFMapView = {
+    lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
         mapView.allowsZooming = true
         mapView.logoInteractionEnabled = false
         mapView.allowsScrolling = true
-        self.locationOverlay = mapView.locationOverlay
+        // self.locationOverlay = mapView.locationOverlay
         return mapView
     }()
     
@@ -87,8 +85,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresen
         naverMapView.addCameraDelegate(delegate: self)
         configStyle()
         configLocation()
-        configCurLocation()
-        setLocationData()
+        locationManager.configLocation(self.naverMapView, self.customMarker)
     }
     
     // MARK: - 모달창 생성
@@ -158,47 +155,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UISheetPresen
         zoomOutBtn.snp.makeConstraints{
             $0.top.equalTo(zoomBtn.snp.bottom).offset(15)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-        }
-    }
-    
-    func configCurLocation() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-    }
-    
-    func setLocationData() {
-        if CLLocationManager.locationServicesEnabled() {
-            print("위치 서비스 On 상태")
-            locationManager.startUpdatingLocation()
-            print(locationManager.location?.coordinate as Any)
-                        
-            // MARK: - 카메라 설정
-            let latitude = locationManager.location?.coordinate.latitude ?? 0
-            let longitude = locationManager.location?.coordinate.longitude ?? 0
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude), zoomTo: 14)
-            naverMapView.moveCamera(cameraUpdate)
-            cameraUpdate.animation = .easeIn
-            customMarker.pickMarker(naverMapView: self.naverMapView, long: longitude, lat: latitude)
-            
-            dataController.getDistrict(long: longitude, lat: latitude) { district in
-                if let district = district {
-                    self.curDistrict = district
-                    print("시작위치: \(longitude), \(latitude)")
-                    print("시작위치(구): \(self.curDistrict)")
-                } else {
-                    print("Failed to fetch district.")
-                }
-            }
-                                                            
-            // MARK: - 오버레이를 내 위치의 위도,경도로 설정
-            guard let locationOverlay = self.locationOverlay else { return }
-            locationOverlay.hidden = false
-            locationOverlay.location = NMGLatLng(lat: latitude, lng: longitude)
-            locationOverlay.icon = NMFOverlayImage(name: "marker3")
-            
-        } else {
-            print("위치 서비스 Off 상태")
         }
     }
 }

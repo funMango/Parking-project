@@ -22,6 +22,8 @@
 		5A5B4C782B1785270042ED01 /* SmallModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5B4C772B1785270042ED01 /* SmallModalView.swift */; };
 		5A60F4002B1617B900326642 /* CustormMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A60F3FF2B1617B900326642 /* CustormMarker.swift */; };
 		5A73C4392B0F51AC0071EAB5 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A73C4382B0F51AC0071EAB5 /* Address.swift */; };
+		5A8C48332B19B27600A3818F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8C48322B19B27600A3818F /* LocationManager.swift */; };
+		5A8C48352B19B2F300A3818F /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8C48342B19B2F300A3818F /* LocationDelegate.swift */; };
 		5AACC5262B11883700204992 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AACC5252B11883700204992 /* Preview.swift */; };
 		5AD1A5F52B18B81200D76392 /* LargeModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD1A5F42B18B81200D76392 /* LargeModalView.swift */; };
 		5AEC8C042B0CD2C000D689A2 /* ParkingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC8C032B0CD2C000D689A2 /* ParkingInfo.swift */; };
@@ -70,6 +72,8 @@
 		5A5B4C772B1785270042ED01 /* SmallModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallModalView.swift; sourceTree = "<group>"; };
 		5A60F3FF2B1617B900326642 /* CustormMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustormMarker.swift; sourceTree = "<group>"; };
 		5A73C4382B0F51AC0071EAB5 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		5A8C48322B19B27600A3818F /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		5A8C48342B19B2F300A3818F /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
 		5AACC5252B11883700204992 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		5AD1A5F42B18B81200D76392 /* LargeModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeModalView.swift; sourceTree = "<group>"; };
 		5AEC8C032B0CD2C000D689A2 /* ParkingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingInfo.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 		5A25CF8E2B0C499400AE60E4 /* ParkingApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A8C48362B19BE0100A3818F /* Delegate */,
 				5A22665F2B0E182300DD1BFB /* Views */,
 				5AEC8C022B0CD2AC00D689A2 /* Models */,
 				5AAB13FD2B0C7CCE00AAB240 /* Controllers */,
@@ -176,11 +181,21 @@
 			path = ParkingAppUITests;
 			sourceTree = "<group>";
 		};
+		5A8C48362B19BE0100A3818F /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				5A5B4C752B177CB80042ED01 /* ModalDelegate.swift */,
+				5A8C48342B19B2F300A3818F /* LocationDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
 		5AAB13FD2B0C7CCE00AAB240 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				5A15E7DB2B0DB8B700F773C6 /* ParkingDataController.swift */,
 				5A60F3FF2B1617B900326642 /* CustormMarker.swift */,
+				5A8C48322B19B27600A3818F /* LocationManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -191,7 +206,6 @@
 				5AEC8C032B0CD2C000D689A2 /* ParkingInfo.swift */,
 				5A15E7E12B0DDB7B00F773C6 /* Constants.swift */,
 				5A73C4382B0F51AC0071EAB5 /* Address.swift */,
-				5A5B4C752B177CB80042ED01 /* ModalDelegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,8 +479,10 @@
 				5A25CF942B0C499400AE60E4 /* ViewController.swift in Sources */,
 				5AACC5262B11883700204992 /* Preview.swift in Sources */,
 				5AD1A5F52B18B81200D76392 /* LargeModalView.swift in Sources */,
+				5A8C48352B19B2F300A3818F /* LocationDelegate.swift in Sources */,
 				5AEC8C042B0CD2C000D689A2 /* ParkingInfo.swift in Sources */,
 				5A15E7E22B0DDB7B00F773C6 /* Constants.swift in Sources */,
+				5A8C48332B19B27600A3818F /* LocationManager.swift in Sources */,
 				5A25CF902B0C499400AE60E4 /* AppDelegate.swift in Sources */,
 				5A73C4392B0F51AC0071EAB5 /* Address.swift in Sources */,
 				5A25CF922B0C499400AE60E4 /* SceneDelegate.swift in Sources */,
