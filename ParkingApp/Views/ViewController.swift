@@ -27,27 +27,24 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
         mapView.allowsZooming = true
         mapView.logoInteractionEnabled = false
         mapView.allowsScrolling = true
-        // self.locationOverlay = mapView.locationOverlay
         return mapView
     }()
     
-    // MARK: - 세로고침 버튼
-    var configuration = UIButton.Configuration.filled()
-    var titleContainer = AttributeContainer()
-    
-    // MARK: - 새로고침 버튼 실행 함수
-    private lazy var refreshBtn = UIButton(configuration: configuration, primaryAction: UIAction(handler: { _ in
-        self.dataController.getDistrict(long: self.long , lat: self.lat) { district in
-            if let district = district {
-                if self.curDistrict != district {
+    // MARK: - 세로고침 버튼    
+    lazy var refreshBtn: RefreshButton = {
+        return RefreshButton(title: "현재 위치에서 다시검색") { [weak self] in
+            guard let self = self else { return }
+            
+            self.dataController.getDistrict(long: self.long , lat: self.lat) { district in
+                if let district = district, self.curDistrict != district {
                     self.customMarker.pickMarker(naverMapView: self.naverMapView, long: self.long, lat: self.lat)
+                } else {
+                    print("지역 정보를 가져오는데 실패했습니다.")
                 }
-            } else {
-                print("Failed to fetch district.")
             }
         }
-    }))
-    
+    }()
+        
     // MARK: - 줌인, 줌아웃 버튼
     lazy var zoomBtn: UIButton = {
         let button = UIButton()
@@ -84,7 +81,6 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
         self.view.backgroundColor = .white
         customMarker.delegate = self
         naverMapView.addCameraDelegate(delegate: self)
-        configStyle()
         configLocation()
         locationManager.configLocation(self.naverMapView, self.customMarker)
     }
@@ -120,17 +116,7 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
         }
         present(vc, animated: true, completion: nil)
     }
-    
-    func configStyle() {
-        titleContainer.font = UIFont.boldSystemFont(ofSize: 20)
-        configuration.attributedTitle = AttributedString("refresh", attributes: titleContainer)
-        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 15)
-        configuration.imagePadding = 10
-        configuration.titlePadding = 3
-        configuration.title = "현 위치에서 새로고침"
-        configuration.image = UIImage(systemName: "arrow.clockwise")
-    }
-    
+         
     func configLocation() {
         self.view.addSubview(naverMapView)
         self.view.addSubview(refreshBtn)
