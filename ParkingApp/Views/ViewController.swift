@@ -46,36 +46,9 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
     }()
         
     // MARK: - 줌인, 줌아웃 버튼
-    lazy var zoomBtn: UIButton = {
-        let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-        let image = UIImage(systemName: "plus.circle", withConfiguration: imageConfig)
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemBlue
-        button.addTarget(self, action: #selector(plusBtnTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func plusBtnTapped() {
-        let cameraUpdate = NMFCameraUpdate.withZoomIn()
-        naverMapView.moveCamera(cameraUpdate)
-    }
-    
-    lazy var zoomOutBtn: UIButton = {
-        let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-        let image = UIImage(systemName: "minus.circle", withConfiguration: imageConfig)
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemBlue
-        button.addTarget(self, action: #selector(minusBtnTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func minusBtnTapped() {
-        let cameraUpdate = NMFCameraUpdate.withZoomOut()
-        naverMapView.moveCamera(cameraUpdate)
-    }
-            
+    lazy var zoomInBtn = ZoomButton("plus.circle", self.naverMapView, .ZoomIn)
+    lazy var zoomOutBtn = ZoomButton("minus.circle", self.naverMapView, .ZoomOut)
+                
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -120,7 +93,7 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
     func configLocation() {
         self.view.addSubview(naverMapView)
         self.view.addSubview(refreshBtn)
-        self.view.addSubview(zoomBtn)
+        self.view.addSubview(zoomInBtn)
         self.view.addSubview(zoomOutBtn)
         
         naverMapView.snp.makeConstraints{ make in
@@ -134,13 +107,13 @@ class ViewController: UIViewController, UISheetPresentationControllerDelegate, M
             make.width.equalTo(230)
         }
         
-        zoomBtn.snp.makeConstraints{
+        zoomInBtn.snp.makeConstraints{
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
         
         zoomOutBtn.snp.makeConstraints{
-            $0.top.equalTo(zoomBtn.snp.bottom).offset(15)
+            $0.top.equalTo(zoomInBtn.snp.bottom).offset(15)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
     }
