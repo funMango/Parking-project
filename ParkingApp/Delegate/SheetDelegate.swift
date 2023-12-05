@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ModalDelegate {
+protocol SheetDelegate {
     func presentModal(_ parking: Parking)
 }
